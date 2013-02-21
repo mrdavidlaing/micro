@@ -100,8 +100,27 @@ def setup_local(natsHost, natsPort, natsUser=nil, natsPass=nil, apiPort=nil)
   write_yaml(gateway_cfg, cfg)
 
   [ 'mssql_gateway_svc', 'mssql_node_svc' ].each do |svc|
+    # puts "sc config #{svc} start= delayed-auto > nul"
     system("sc config #{svc} start= delayed-auto > nul")
+    # puts "sc start #{svc} > nul"
     system("sc start #{svc} > nul")
+    started = false
+    cnt = 0
+    until started
+      sleep(30)
+      # puts "sc query #{svc} 2>&1"
+      query_out = %x/sc query #{svc} 2>&1/
+      # puts "sc query OUT:\n#{query_out}"
+      started = query_out =~ /RUNNING/
+      if started || cnt > 5
+        break
+      else
+        cnt += 1
+      end
+      if query_out =~ /STOPPED/
+        system("sc start #{svc} > nul")
+      end
+    end
   end
 
   print '

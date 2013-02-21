@@ -1,0 +1,13 @@
+--- /var/vcap/jobs/micro/cloud_controller/config/runtimes.yml   2013-02-21 15:34:59.811051015 +0000
++++ /var/vcap/jobs/micro/cloud_controller/config/runtimes-new.yml       2013-02-21 16:23:54.489735072 +0000
+@@ -1,4 +1,10 @@
+ ---
++clr40:
++  description: ".NET CLR 4.0"
++  version: 4.0.30319
++clr20:
++  description: ".NET CLR 2.0"
++  version: 2.0.50727
+ java:
+   description: Java 6
+   version: "1.6.0_24"
