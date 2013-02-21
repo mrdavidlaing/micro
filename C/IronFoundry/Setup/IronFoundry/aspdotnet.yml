@@ -1,12 +1,15 @@
 ---
 name: "aspdotnet"
 runtimes:
-  - "aspdotnet40":
-      version: "4.0.30319.1"
-      description: "ASP.NET 4.0 (4.0.30319.1)"
+  - "clr40":
+      version: "4.0.30319"
+      description: ".NET 4.0 (4.0.30319)"
       default: true       
+  - "clr20":
+      version: "2.0.50727"
+      description: ".NET 2.0 (2.0.50727)"
 app_servers:
-  # handled by CloudFoundry.Dea - Dot Net Service
+  # handled by .NET DEA
 detection:
   - "web.config": true # web.config must be present
 staged_services:
