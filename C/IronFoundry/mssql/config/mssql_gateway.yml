@@ -1,0 +1,52 @@
+---
+cloud_controller_uri: api.vcap.me
+service:
+  name: mssql
+  version: "10.50.2500"
+  description: 'Microsoft SQL Server database'
+  plans: ['free']
+  default_plan: free
+  tags: ['mssql', 'mssql-10.50.2500', 'SQL Server 2008 R2', 'relational']
+  supported_versions: ["10.50.2500"]
+  version_aliases:
+    "current" : "10.50.2500"
+  timeout: 30
+
+#proxy:
+#   host: proxy
+#   port: 8080
+#   keepalive: true
+
+# ip_route: 127.0.0.1 # NB: optional, only set if necessary
+
+index: 0
+token: changemssqltoken
+logging:
+  level: error
+  file: C:/IronFoundry/mssql/log/mssql_gateway.log
+mbus: nats://nats:nats@192.168.171.129:4222
+pid: C:/IronFoundry/mssql/run/mssql_gateway.pid
+node_timeout: 2
+
+# TODO
+# resque:
+#   host: localhost
+#   port: 5454
+# download_url_template: http://dl.vcap.me/serialized/%{service}/%{name}/snapshots/%{snapshot_id}?token=%{token}
+ 
+plan_management:
+  plans:
+    free:
+      low_water: 10
+      high_water: 180
+      lifecycle:
+        snapshot:
+          quota: 5
+        serialization: enable
+        job: enable
+      #allow_over_provisioning: false
+
+# z_interval: 30
+# check_orphan_interval: 3600
+# double_check_orphan_interval: 300
+# max_nats_payload: 1048576
